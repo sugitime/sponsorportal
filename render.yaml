@@ -9,7 +9,7 @@ services:
     healthCheckPath: /
     envVars:
       - key: NODE_VERSION
-        value: 22.18.1
+        value: 22.22.0
       - key: AUTH_SECRET
         generateValue: true
       - key: XAI_API_KEY
