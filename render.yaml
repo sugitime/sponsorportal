@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: sponsorportal
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 22.18.1
+      - key: AUTH_SECRET
+        generateValue: true
+      - key: XAI_API_KEY
+        sync: false
