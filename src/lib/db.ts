@@ -13,30 +13,30 @@ const DEMO_EMAILS: Record<string, string> = {
   "user-sponsor-1": "sponsor@sponsorportal.com",
 };
 
-const LEGACY_EMAILS: Record<string, string> = {
-  "ivan.p@example.net": "admin@sponsorportal.com",
-  "ivan.p@example.net": "creator@sponsorportal.com",
-  "uma.s@example.org": "sponsor@sponsorportal.com",
-};
+const LEGACY_EMAILS = new Map<string, string>([
+  ["ivan.p@example.net", "admin@sponsorportal.com"],
+  ["ivan.p@example.net", "creator@sponsorportal.com"],
+  ["uma.s@example.org", "sponsor@sponsorportal.com"],
+]);
 
 async function remapDemoAccounts(db: Database) {
   let changed = false;
   for (const user of db.users) {
-    const next = DEMO_EMAILS[user.id] || LEGACY_EMAILS[user.email];
+    const next = DEMO_EMAILS[user.id] || LEGACY_EMAILS.get(user.email);
     if (next && user.email !== next) {
       user.email = next;
       changed = true;
     }
   }
   for (const item of db.prospectuses) {
-    const next = LEGACY_EMAILS[item.contactEmail];
+    const next = LEGACY_EMAILS.get(item.contactEmail);
     if (next) {
       item.contactEmail = next;
       changed = true;
     }
   }
   for (const item of db.interests) {
-    const next = LEGACY_EMAILS[item.sponsorEmail];
+    const next = LEGACY_EMAILS.get(item.sponsorEmail);
     if (next) {
       item.sponsorEmail = next;
       changed = true;
