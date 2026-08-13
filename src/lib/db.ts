@@ -7,6 +7,44 @@ import { emptyDatabase, seedProspectuses, seedUsers } from "./seed";
 const DATA_DIR = path.join(process.cwd(), "data");
 const DB_PATH = path.join(DATA_DIR, "db.json");
 
+const DEMO_EMAILS: Record<string, string> = {
+  "user-admin": "admin@sponsorportal.com",
+  "user-prospect-1": "creator@sponsorportal.com",
+  "user-sponsor-1": "sponsor@sponsorportal.com",
+};
+
+const LEGACY_EMAILS: Record<string, string> = {
+  "ivan.p@example.net": "admin@sponsorportal.com",
+  "ivan.p@example.net": "creator@sponsorportal.com",
+  "uma.s@example.org": "sponsor@sponsorportal.com",
+};
+
+async function remapDemoAccounts(db: Database) {
+  let changed = false;
+  for (const user of db.users) {
+    const next = DEMO_EMAILS[user.id] || LEGACY_EMAILS[user.email];
+    if (next && user.email !== next) {
+      user.email = next;
+      changed = true;
+    }
+  }
+  for (const item of db.prospectuses) {
+    const next = LEGACY_EMAILS[item.contactEmail];
+    if (next) {
+      item.contactEmail = next;
+      changed = true;
+    }
+  }
+  for (const item of db.interests) {
+    const next = LEGACY_EMAILS[item.sponsorEmail];
+    if (next) {
+      item.sponsorEmail = next;
+      changed = true;
+    }
+  }
+  return changed;
+}
+
 let queue: Promise<unknown> = Promise.resolve();
 
 function withLock<T>(fn: () => Promise<T>): Promise<T> {
@@ -23,7 +61,11 @@ async function ensureSeeded(): Promise<Database> {
   try {
     const raw = await fs.readFile(DB_PATH, "utf8");
     const parsed = JSON.parse(raw) as Database;
-    if (parsed.users?.length) return parsed;
+    if (parsed.users?.length) {
+      const remapped = await remapDemoAccounts(parsed);
+      if (remapped) await fs.writeFile(DB_PATH, JSON.stringify(parsed, null, 2), "utf8");
+      return parsed;
+    }
   } catch {
     // first run
   }
@@ -39,7 +81,7 @@ async function ensureSeeded(): Promise<Database> {
         prospectusId: "prs-marathon",
         sponsorId: "user-sponsor-1",
         sponsorName: "Elena Voss",
-        sponsorEmail: "uma.s@example.org",
+        sponsorEmail: "sponsor@sponsorportal.com",
         sponsorOrganization: "Northline Capital",
         message:
           "We are looking at a finish-line partnership for our Pacific book. May we see last year’s hospitality deck?",
@@ -63,7 +105,7 @@ async function ensureSeeded(): Promise<Database> {
         prospectusId: "prs-climate",
         sponsorId: "user-sponsor-1",
         sponsorName: "Elena Voss",
-        sponsorEmail: "uma.s@example.org",
+        sponsorEmail: "sponsor@sponsorportal.com",
         sponsorOrganization: "Northline Capital",
         message:
           "Our climate desk would like a track. Sending our public-works portfolio separately.",

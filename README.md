@@ -34,9 +34,9 @@ Password for all three: `Demo1234!`
 
 | Role | Email |
 | --- | --- |
-| Creator | `ivan.p@example.net` |
-| Sponsor | `uma.s@example.org` |
-| Admin | `ivan.p@example.net` |
+| Creator | `creator@sponsorportal.com` |
+| Sponsor | `sponsor@sponsorportal.com` |
+| Admin | `admin@sponsorportal.com` |
 
 ## Writing assistant
 

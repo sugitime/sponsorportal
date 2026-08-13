@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 
 const demos = [
-  { label: "Creator", email: "ivan.p@example.net" },
-  { label: "Sponsor", email: "uma.s@example.org" },
-  { label: "Admin", email: "ivan.p@example.net" },
+  { label: "Creator", email: "creator@sponsorportal.com" },
+  { label: "Sponsor", email: "sponsor@sponsorportal.com" },
+  { label: "Admin", email: "admin@sponsorportal.com" },
 ];
 
 export function LoginForm({ nextPath }: { nextPath: string }) {
   const router = useRouter();
-  const [email, setEmail] = useState("ivan.p@example.net");
+  const [email, setEmail] = useState("creator@sponsorportal.com");
   const [password, setPassword] = useState("Demo1234!");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -42,7 +42,7 @@ export function LoginForm({ nextPath }: { nextPath: string }) {
       <div className="flex flex-wrap gap-2">
         {demos.map((demo) => (
           <button
-            key={demo.email}
+            key={demo.label}
             type="button"
             className="chip"
             onClick={() => {

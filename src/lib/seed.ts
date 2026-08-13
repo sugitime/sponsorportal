@@ -277,7 +277,7 @@ export const seedTemplates: Template[] = [
 export const seedUsers: Omit<User, "passwordHash">[] = [
   {
     id: "user-admin",
-    email: "ivan.p@example.net",
+    email: "admin@sponsorportal.com",
     name: "Amelia Cho",
     role: "admin",
     organization: "SponsorPortal",
@@ -288,7 +288,7 @@ export const seedUsers: Omit<User, "passwordHash">[] = [
   },
   {
     id: "user-prospect-1",
-    email: "ivan.p@example.net",
+    email: "creator@sponsorportal.com",
     name: "Jonah Hale",
     role: "prospect",
     organization: "North Shore Athletics",
@@ -321,7 +321,7 @@ export const seedUsers: Omit<User, "passwordHash">[] = [
   },
   {
     id: "user-sponsor-1",
-    email: "uma.s@example.org",
+    email: "sponsor@sponsorportal.com",
     name: "Elena Voss",
     role: "sponsor",
     organization: "Northline Capital",
@@ -396,7 +396,7 @@ export function seedProspectuses(): Prospectus[] {
       ],
       callToAction:
         "Course and finish partners are confirmed by the end of summer. If this race should carry your name, write to Jonah. The window is open.",
-      contactEmail: "ivan.p@example.net",
+      contactEmail: "creator@sponsorportal.com",
       contactName: "Jonah Hale",
       createdAt: "2026-03-02T18:00:00.000Z",
       updatedAt: "2026-03-28T10:12:00.000Z",
@@ -580,7 +580,7 @@ export function seedProspectuses(): Prospectus[] {
       ],
       callToAction:
         "We partner with eight houses each year. If your name belongs in a midsummer park, write while the program is still being drawn.",
-      contactEmail: "ivan.p@example.net",
+      contactEmail: "creator@sponsorportal.com",
       contactName: "Jonah Hale",
       createdAt: "2026-01-30T20:00:00.000Z",
       updatedAt: "2026-03-15T08:44:00.000Z",
@@ -654,7 +654,7 @@ export function seedProspectuses(): Prospectus[] {
         pkg("d2", "Room", "", "gold", [""]),
       ],
       callToAction: "",
-      contactEmail: "ivan.p@example.net",
+      contactEmail: "creator@sponsorportal.com",
       contactName: "Jonah Hale",
       createdAt: now,
       updatedAt: now,
